@@ -1,3 +1,6 @@
-/target
-/.env
-!/.env.example
+.tmp/
+
+.env
+!.env.example
+
+
