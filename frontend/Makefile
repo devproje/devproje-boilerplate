@@ -2,9 +2,12 @@ CC = bun
 OUTDIR = ./dist
 TARGET = ../public
 
-.PHONY: all build copyto clean
+.PHONY: all init build copyto clean
 
 all: build copyto
+
+init:
+	@$(CC) install
 
 build:
 	@$(CC) run build
