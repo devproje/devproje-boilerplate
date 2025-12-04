@@ -1,8 +1,8 @@
 #root {
-	width: 100vw;
 	display: flex;
+	padding: 0 10px;
 	min-height: 100vh;
-	flex-direction: column;
+	justify-content: center;
 }
 
 .container {

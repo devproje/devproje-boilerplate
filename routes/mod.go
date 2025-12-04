@@ -8,15 +8,14 @@ import (
 func health(ctx *gin.Context) {
 	var ok = sample.SampleServiceModule.Health()
 	if !ok {
-		ctx.JSON(500, gin.H{"ok": 0, "errno":"Your webserver health is not online"})
+		ctx.JSON(500, gin.H{"ok": 0, "errno": "Your webserver health is not online"})
 		return
 	}
 
-	ctx.JSON(200, gin.H{"ok":1,"status":"Your webserver health is ok"})
+	ctx.JSON(200, gin.H{"ok": 1, "status": "Your webserver health is ok"})
 }
 
 func API(app *gin.Engine) {
 	v1 := app.Group("/v1")
 	v1.GET("/health", health)
 }
-

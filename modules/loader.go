@@ -54,4 +54,3 @@ func (sl *ModuleLoader) Unload() {
 var LOADER = &ModuleLoader{
 	modules: []ServiceModule{},
 }
-

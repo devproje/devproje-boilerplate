@@ -1,7 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router";
 import Home from "@/pages/home";
-import "./App.scss";
+import { BrowserRouter, Route, Routes } from "react-router";
 import GeneralLayout from "@/components/layout/general-layout";
+
+import "./App.scss";
 
 function App() {
 	return (

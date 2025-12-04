@@ -43,23 +43,27 @@ func (db *Database) Init() error {
 	var c = strings.Trim(fmt.Sprintf("sslmode=disable %s %s %s %s %s", host, port, dbname, user, password), " ")
 	var d, err = sql.Open("postgres", c)
 	d.SetMaxIdleConns(10)
+
 	if err != nil {
-		return err
+		goto cleanup
 	}
-	defer d.Close()
 
 	err = d.Ping()
 	if err != nil {
-		return err
+		goto cleanup
 	}
 
 	err = db.migrate(d)
 	if err != nil {
-		return err
+		goto cleanup
 	}
 
 	db.DB = d
 	return nil
+
+cleanup:
+	d.Close()
+	return err
 }
 
 func (db *Database) Destroy() error {
@@ -72,4 +76,3 @@ func (db *Database) Destroy() error {
 }
 
 var DatabaseModule = &Database{}
-

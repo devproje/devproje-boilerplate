@@ -126,4 +126,3 @@ func (d *Database) migrate(db *sql.DB) error {
 
 	return nil
 }
-

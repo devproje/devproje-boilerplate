@@ -4,8 +4,8 @@ import (
 	"context"
 	"embed"
 	"fmt"
-	"log"
 	"io/fs"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -37,7 +37,7 @@ func cli(args []string) bool {
 }
 
 func mime(path string) string {
-	switch {
+	switch true {
 	case strings.HasSuffix(path, ".ico"):
 		return "image/x-icon"
 	case strings.HasSuffix(path, ".txt"):
@@ -74,11 +74,11 @@ func main() {
 	var index, _ = fs.ReadFile(public, "index.html")
 
 	app.StaticFS("/assets", http.FS(assets))
-	app.GET("/", func (ctx *gin.Context) {
+	app.GET("/", func(ctx *gin.Context) {
 		ctx.Data(200, "text/html; charset=utf-8", index)
 	})
 
-	app.NoRoute(func (ctx *gin.Context) {
+	app.NoRoute(func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path[1:]
 
 		if data, err := fs.ReadFile(public, path); err == nil {
