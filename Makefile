@@ -5,6 +5,8 @@ MAIN = .
 FRONTEND_DIR = frontend/
 OUTPUT = sample-app
 
+DOCKER_TAG = boilerplate:latest
+
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "0.1.0")
 BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
 HASH ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
@@ -20,7 +22,7 @@ LD_FLAGS := -X config.version=$(FULL_VERSION)	\
 
 BUILD_FLAGS := -ldflags "$(LDFLAGS)"
 
-.PHONY: all build-frontend build clean
+.PHONY: all build-frontend build docker clean
 
 all: build-frontend build
 
@@ -30,6 +32,9 @@ build-frontend: $(FRONTEND_DIR)
 
 build: $(SRCS)
 	@go build $(BUILD_FLAGS) -o $(OUTPUT) $(MAIN)
+
+docker:
+	@docker build -t $(DOCKER_TAG) .
 
 clean:
 	@make -C $(FRONTEND_DIR) clean
