@@ -6,4 +6,10 @@ bun install
 cd ../
 
 echo "Initializing core backend service..."
-go mod tidy
+if [ ! command -v cargo >/dev/null 2>&1 ]
+then
+	echo "rust is not configured, please install rust first!"
+	exit 1
+fi
+
+cargo check

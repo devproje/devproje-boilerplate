@@ -1,23 +1,19 @@
-FROM fedora:43 AS builder
+FROM rust:latest AS builder
 
 WORKDIR /app/src
 COPY . .
 
-ENV RAW_PATH="/usr/local/go/bin:/root/.bun/bin"
+ENV RAW_PATH="/root/.bun/bin"
 
-RUN dnf install make unzip wget -y
-RUN dnf clean all
-
-RUN wget https://go.dev/dl/go1.25.5.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go1.25.5.linux-amd64.tar.gz
-RUN curl -fsSL https://bun.sh/install | sh
-
-RUN rm go1.25.5.linux-amd64.tar.gz
+RUN apt update
+RUN apt install make unzip wget -y
+RUN apt clean all
+RUN curl -fsSL https://bun.sh/install | bash
 
 RUN PATH="$PATH:${RAW_PATH}" ./configure
 RUN PATH="$PATH:${RAW_PATH}" make
 
-RUN cp ./sample-app /app
+RUN cp ./target/release/sample-app /app
 
 WORKDIR /app
 RUN rm -rf src/
